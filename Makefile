@@ -1,3 +1,5 @@
+QEMU ?= qemu-system-i386
+
 arch ?= i686
 target ?= $(arch)-unknown-linux-gnu
 
@@ -15,6 +17,15 @@ all: os-image
 .PHONY: run
 run: all
 	bochs
+
+.PHONY: run-qemu
+run-qemu:
+	$(QEMU) -fda $(os-image)
+
+.PHONY: debug-qemu
+debug-qemu: $(os-image)
+	$(QEMU) -S -gdb tcp::3333 -fda $< &
+	termite -e 'gdb $< -ex "target remote :3333" -ex "break *0x1000" -ex "c"'
 
 .PHONY: disassemble
 disassemble: $(kernel)
