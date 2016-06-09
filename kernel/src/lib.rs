@@ -11,6 +11,7 @@ extern crate spin;
 #[macro_use]
 mod vga_buffer;
 
+#[link_section=".text_first"] // ensure that this function comes first
 #[start]
 #[export_name ="_start"]
 pub extern fn rust_main() {

@@ -6,7 +6,8 @@ SECTIONS
 
 	.text :
 	{
-		*(.text .text.*)
+		*(.text_first)
+		*(.text*)
 		. = ALIGN(4K);
 	}
 
